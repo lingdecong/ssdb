@@ -16,7 +16,7 @@ Config* Config::load(const char *filename){
 	FILE *fp = NULL;
 	int lineno = 0;
 
-    // PROB: 这里为什么会比较 stdout? 猜想是因为其他程序的输出是这个程序的输入？
+	// PROB: 这里为什么会比较 stdout? 猜想是因为其他程序的输出是这个程序的输入？
 	if(strcmp(filename, "stdout") == 0){
 		fp = stdin;
 	}else{
@@ -48,10 +48,10 @@ Config* Config::load(const char *filename){
 			continue;
 		}
 		if(indent <= last_indent){
-			for(int i = indent; i <= last_indent; i++){
+			for(int i = indent; i <= last_indent; i++)
 				/* 第一个配置时, 此条件为真 */
 				// NOTE: 如果是同一层的而且当前 cfg 不是 root, 就回到父 config
-                if(cfg != root){
+				if(cfg != root){
 					cfg = cfg->parent;
 				}
 			}
@@ -59,7 +59,7 @@ Config* Config::load(const char *filename){
 			log_error("invalid indent line(%d)", lineno);
 			goto err;
 		}
-		
+
 		if(isspace(*key)){
 			log_error("invalid line(%d): unexpected whitespace char '%c'", lineno, *key);
 			goto err;
@@ -278,4 +278,3 @@ int Config::save(const char *filename) const{
 	}
 	return 0;
 }
-
