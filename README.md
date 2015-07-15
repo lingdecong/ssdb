@@ -1,3 +1,4 @@
+This repo is just for me to study and test!
 # SSDB - A fast NoSQL database for storing big list of data
 
 SSDB is a high performace key-value(key-string, key-zset, key-hashmap) NoSQL database, __an alternative to Redis__.
