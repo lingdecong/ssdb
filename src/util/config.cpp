@@ -124,6 +124,11 @@ Config::~Config(){
 	}
 }
 
+// NOTE:
+// 因为 key 有 parent 这个概念， 所以程序里的 key 是类似这样的
+// proxy.php.host 或者 proxy/php/host
+// 所以需要 find_child 找到最深那层
+// 添加操作需要添加到最后那个 key， 一层层 add_child
 Config* Config::build_key_path(const char *key){
 	char path[CONFIG_MAX_LINE];
 	Config *conf = this;
@@ -183,6 +188,10 @@ const Config* Config::find_child(const char *key) const{
 	return NULL;
 }
 
+// NOTE:
+// 因为 key 有 parent 这个概念， 所以程序里的 key 是类似这样的
+// proxy.php.host 或者 proxy/php/host
+// 所以需要 find_child 找到最深那层
 const Config* Config::get(const char *key) const{
 	char path[CONFIG_MAX_LINE];
 	const Config *conf = this;
@@ -261,6 +270,8 @@ int Config::save(FILE *fp) const{
 int Config::save(const char *filename) const{
 	FILE *fp;
 
+	// NOTE:
+	// 判断输出是否是 stdout or stderr
 	if(strcmp(filename, "stdout") == 0){
 		fp = stdout;
 	}else if(strcmp(filename, "stderr") == 0){
